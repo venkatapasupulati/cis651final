@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "30059980755",
+    "firebase_url": "https://cis-651-final-default-rtdb.firebaseio.com",
+    "project_id": "cis-651-final",
+    "storage_bucket": "cis-651-final.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:30059980755:android:a87fff42050ae1c27c7126",
+        "android_client_info": {
+          "package_name": "com.suuniv.afinal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "30059980755-gfvugbndfn1eateu3d27ecebo7832r7g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrkQz_1J4XayW2TzbpAOA_M_ceMVmujmw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "30059980755-gfvugbndfn1eateu3d27ecebo7832r7g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
