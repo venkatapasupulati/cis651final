@@ -13,6 +13,16 @@ public class PawModel {
 
    private String ownerInfo;
 
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    private String userId;
+
     public String getPaw_name() {
         return paw_name;
     }

@@ -10,25 +10,85 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.suuniv.afinal.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PawProfilesRecycler extends RecyclerView.Adapter<PawProfilesRecycler.ViewHolder>
         implements Filterable {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference allPostsRef = database.getReference("Movies");
+    DatabaseReference allPostsRef = database.getReference("Paws");
     ChildEventListener usersRefListener;
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
     private List<PawModel> pawModelList;
+
+    public interface OnItemClickListener {
+        void onListItemSelected(View sharedView, String imageResourceID, String title,
+                                String year,String rating, String description);
+    }
+
+    private OnItemClickListener onItemClickListener;
+    private RecyclerView r;
+
+    public  PawProfilesRecycler(RecyclerView recyclerView, OnItemClickListener onItemClickListener){
+        pawModelList =new ArrayList<>();
+        r=recyclerView;
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
+        System.out.println("in MOVIE RECYCLER");
+
+        allPostsRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                PawModel pawModel = new PawModel();
+
+                pawModel.setUserId(snapshot.child("userId").getValue().toString());
+                pawModel.setPaw_name(snapshot.child("paw_name").getValue().toString());
+                pawModel.setVaccinations(snapshot.child("vaccinations").getValue().toString());
+                pawModel.setBreed(snapshot.child("breed").getValue().toString());
+                pawModel.setAge(snapshot.child("age").getValue().toString());
+                pawModel.setQuirks(snapshot.child("quirks").getValue().toString());
+
+                pawModelList.add(pawModel);
+                PawProfilesRecycler.this.notifyDataSetChanged();
+
+                r.scrollToPosition(pawModelList.size()-1);
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
 
 
     @Override
@@ -47,12 +107,19 @@ public class PawProfilesRecycler extends RecyclerView.Adapter<PawProfilesRecycle
     @Override
     public void onBindViewHolder(@NonNull PawProfilesRecycler.ViewHolder holder, int position) {
 
+        System.out.println("In ONBIND");
+        PawModel u = pawModelList.get(position);
+        holder.age.setText(u.getAge());
+        System.out.println("onBINdholder "+u.getPaw_name());
+        holder.name_v.setText(u.getPaw_name());
+        holder.breed.setText(u.getBreed());
+        holder.vacinations.setText(u.getVaccinations());
 
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return pawModelList.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{

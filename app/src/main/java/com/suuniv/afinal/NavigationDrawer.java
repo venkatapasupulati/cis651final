@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.suuniv.afinal.paw.PawProfile;
 
 public class NavigationDrawer extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -78,7 +79,7 @@ public class NavigationDrawer extends AppCompatActivity implements NavigationVie
                 toast=Toast.makeText(this,"ViewPager Clicked",Toast.LENGTH_SHORT);
                 toast.show();
 
-
+                startActivity(new Intent(this, PawProfile.class));
                 break;
             case R.id.item3:
                 toast=Toast.makeText(this,"Item 3 Clicked",Toast.LENGTH_SHORT);

@@ -20,73 +20,35 @@
         app:layout_constraintTop_toBottomOf="@id/my_toolbar">
 
 
-
-
-        <ImageView
-            android:id="@+id/dogpreviewImage"
-            app:layout_constraintTop_toBottomOf="@id/my_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            />
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <Button
-                android:text="Take Picture"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/previewImage"
-
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:onClick="Publish"/>
-
-
-            <Button
-                android:text="Open Gallery"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/previewImage"
-                android:layout_gravity="right"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:onClick="openGallery"/>
-
-        </LinearLayout>
-        <EditText
+        <TextView
             android:id="@+id/paw_name"
             android:hint="My Paw Name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"></EditText>
+            android:layout_height="wrap_content"></TextView>
 
-        <EditText
+        <TextView
             android:hint="Breed"
             android:id="@+id/breed"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"></EditText>
-        <EditText
+            android:layout_height="wrap_content"></TextView>
+        <TextView
             android:hint="Age"
             android:id="@+id/age"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"></EditText>
+            android:layout_height="wrap_content"></TextView>
 
-        <EditText
+        <TextView
             android:hint="Personality/quirks"
             android:id="@+id/quirks"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"></EditText>
+            android:layout_height="wrap_content"></TextView>
 
-        <EditText
+        <TextView
             android:hint="Vaccinations"
             android:id="@+id/vaccinations"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"></EditText>
+            android:layout_height="wrap_content"></TextView>
 
-        <Button
-            android:text="Add"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="uploadPaw"/>
 
     </LinearLayout>
 
