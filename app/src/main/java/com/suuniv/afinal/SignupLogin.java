@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -31,6 +32,8 @@ public class SignupLogin extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
     Button signupBtn;
+    ImageView img;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +44,9 @@ public class SignupLogin extends AppCompatActivity {
         displayname=findViewById(R.id.displayNameText);
         signupBtn=findViewById(R.id.singupBtn);
         userType = findViewById(R.id.dogwalker);
+        img= findViewById(R.id.logo);
+        img.setImageResource(R.mipmap.dog_and_owner_round);
+
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
@@ -128,6 +134,17 @@ public class SignupLogin extends AppCompatActivity {
     }
     public void sendEmailVerification(View view) {
         Toast.makeText(this, "You clicked sendEmailVerification", Toast.LENGTH_SHORT).show();
+
+    }
+
+    public void dogwalkerClick(View view) {
+
+        if(userType.isChecked()){
+            img.setImageResource(R.mipmap.dog_walker_round);
+        }
+        else{
+            img.setImageResource(R.mipmap.dog_and_owner_round);
+        }
 
     }
 

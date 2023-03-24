@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray"
+    android:background="@color/white"
     android:paddingLeft="30dp"
     android:paddingTop="10dp"
     android:paddingRight="30dp"
@@ -12,8 +12,8 @@
 
     <ImageView
         android:id="@+id/logo"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
 
 
         app:layout_constraintLeft_toLeftOf="parent"
@@ -30,7 +30,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:hint="Email"
             android:textColor="@color/white">
 
@@ -43,7 +43,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:hint="Password"
             android:textColor="@color/white">
 
@@ -57,7 +57,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/displayNameLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:hint="Display Name">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -70,7 +70,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/phoneNumberLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:hint="Phone Number">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -84,28 +84,30 @@
             android:text="Dog Walker"
             android:id="@+id/dogwalker"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"></CheckBox>
+            android:layout_height="wrap_content"
+            android:onClick="dogwalkerClick"></CheckBox>
         <Button
             android:id="@+id/singupBtn"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/color_primary"
+            android:layout_height="50dp"
+            android:background="@drawable/dog_bone"
             android:onClick="Signup"
             android:text="SIGNUP"
-            android:textColor="@color/color_offwhite"
-            android:textSize="20sp">
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            >
 
         </Button>
 
         <Button
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginTop="5dp"
-            android:background="@color/color_primary"
             android:onClick="Login"
+            android:background="@drawable/dog_bone"
             android:text="LOGIN"
-            android:textColor="@color/color_offwhite"
-            android:textSize="20sp">
+            android:textColor="@color/black"
+            android:textSize="17sp">
 
         </Button>
 

@@ -11,6 +11,17 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+
+
+
+//add account overview. May need to add some more fields to the user
+
+
+
+
+
+
+
 public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
