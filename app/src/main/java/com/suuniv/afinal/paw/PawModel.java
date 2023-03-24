@@ -13,6 +13,26 @@ public class PawModel {
 
    private String ownerInfo;
 
+    private String url;
+
+    private String pid;
+
+    public String getUrl() {
+        return url;
+    }
+
+    public String getPid() {
+        return pid;
+    }
+
+    public void setPid(String pid) {
+        this.pid = pid;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     public String getUserId() {
         return userId;
     }

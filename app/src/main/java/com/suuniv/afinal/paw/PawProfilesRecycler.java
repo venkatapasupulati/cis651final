@@ -1,6 +1,12 @@
 package com.suuniv.afinal.paw;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.database.Cursor;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
@@ -11,6 +17,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.PopupMenu;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,10 +29,13 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.suuniv.afinal.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PawProfilesRecycler extends RecyclerView.Adapter<PawProfilesRecycler.ViewHolder>
         implements Filterable {
@@ -52,16 +64,19 @@ public class PawProfilesRecycler extends RecyclerView.Adapter<PawProfilesRecycle
         allPostsRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
                 PawModel pawModel = new PawModel();
+                if(currentUser.getUid().equalsIgnoreCase(snapshot.child("userId").getValue().toString())) {
+                    pawModel.setUserId(snapshot.child("userId").getValue().toString());
+                    pawModel.setPaw_name(snapshot.child("paw_name").getValue().toString());
+                    pawModel.setVaccinations(snapshot.child("vaccinations").getValue().toString());
+                    pawModel.setBreed(snapshot.child("breed").getValue().toString());
+                    pawModel.setAge(snapshot.child("age").getValue().toString());
+                    pawModel.setQuirks(snapshot.child("quirks").getValue().toString());
+                    pawModel.setPid(snapshot.child("pid").getValue().toString());
+                    pawModelList.add(pawModel);
+                }
 
-                pawModel.setUserId(snapshot.child("userId").getValue().toString());
-                pawModel.setPaw_name(snapshot.child("paw_name").getValue().toString());
-                pawModel.setVaccinations(snapshot.child("vaccinations").getValue().toString());
-                pawModel.setBreed(snapshot.child("breed").getValue().toString());
-                pawModel.setAge(snapshot.child("age").getValue().toString());
-                pawModel.setQuirks(snapshot.child("quirks").getValue().toString());
-
-                pawModelList.add(pawModel);
                 PawProfilesRecycler.this.notifyDataSetChanged();
 
                 r.scrollToPosition(pawModelList.size()-1);
@@ -74,6 +89,14 @@ public class PawProfilesRecycler extends RecyclerView.Adapter<PawProfilesRecycle
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+                System.out.println("on child removed "+snapshot.getKey());
+                for (int i = 0; i < pawModelList.size(); i++) {
+                    if(pawModelList.get(i).getPid().equals(snapshot.getKey())) {
+                        pawModelList.remove(i);
+                        notifyItemRemoved(i);
+                        break;
+                    }
+                }
 
             }
 
@@ -107,13 +130,92 @@ public class PawProfilesRecycler extends RecyclerView.Adapter<PawProfilesRecycle
     @Override
     public void onBindViewHolder(@NonNull PawProfilesRecycler.ViewHolder holder, int position) {
 
-        System.out.println("In ONBIND");
+        System.out.println("In ONBIND"+pawModelList.size());
         PawModel u = pawModelList.get(position);
-        holder.age.setText(u.getAge());
-        System.out.println("onBINdholder "+u.getPaw_name());
-        holder.name_v.setText(u.getPaw_name());
-        holder.breed.setText(u.getBreed());
-        holder.vacinations.setText(u.getVaccinations());
+
+        if(u.getUserId().equalsIgnoreCase(currentUser.getUid())){
+
+            holder.age.setText(u.getAge());
+            System.out.println("onBINdholder "+u.getPaw_name());
+            holder.name_v.setText(u.getPaw_name());
+            holder.breed.setText(u.getBreed());
+            holder.vacinations.setText(u.getVaccinations());
+
+            holder.extras_v.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    System.out.println("extras clicked");
+                    PopupMenu popup = new PopupMenu(view.getContext(), view);
+                    MenuInflater inflater = popup.getMenuInflater();
+                    inflater.inflate(R.menu.extras, popup.getMenu());
+                    popup.show();
+
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener(){
+
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+
+
+                            System.out.println("itemId "+item.getItemId());
+
+                            System.out.println("R.id.update "+R.id.update);
+
+                            switch (item.getItemId()) {
+                                case R.id.delete:
+
+
+                                    AlertDialog.Builder alert = new AlertDialog.Builder(view.getContext());
+                                    alert.setTitle("Delete Paw");
+                                    alert.setMessage("Are you sure you want to delete?");
+                                    alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            // continue with delete
+                                            System.out.println("CLICKED YES "+u.getPid());
+                                            allPostsRef.orderByChild("pid").equalTo(u.getPid())
+                                                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                                                        @Override
+                                                        public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                                            for(DataSnapshot data: dataSnapshot.getChildren()){
+                                                                data.getRef().removeValue();
+
+                                                            }
+
+                                                        }
+                                                        @Override
+                                                        public void onCancelled(DatabaseError databaseError) {
+
+                                                        }
+                                                    });
+                                        }
+                                    });
+                                    alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            // close dialog
+                                            dialog.cancel();
+                                        }
+                                    });
+                                    alert.show();
+
+                                    return true;
+
+                                case R.id.update:
+
+                                    return true;
+
+                                default:
+                                    return false;
+                            }
+
+
+                        }
+                    });
+                }
+            });
+        }
+
 
     }
 
@@ -142,6 +244,8 @@ public class PawProfilesRecycler extends RecyclerView.Adapter<PawProfilesRecycle
             age=v.findViewById(R.id.age);
             breed=v.findViewById(R.id.breed);
             vacinations = v.findViewById(R.id.vaccinations);
+
+            extras_v = v.findViewById(R.id.extras);
 
         }
     }

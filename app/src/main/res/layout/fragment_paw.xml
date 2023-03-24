@@ -32,20 +32,21 @@
                 android:text="Take Picture"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/previewImage"
-
+                android:id="@+id/takepwpic"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:onClick="Publish"/>
+                android:onClick="takePawPicture"/>
 
 
             <Button
                 android:text="Open Gallery"
+                android:id="@+id/openGallery"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/previewImage"
                 android:layout_gravity="right"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:onClick="openGallery"/>
+                android:onClick="openPawGallery"/>
 
         </LinearLayout>
         <EditText

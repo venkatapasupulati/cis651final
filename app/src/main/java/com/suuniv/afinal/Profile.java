@@ -49,6 +49,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
+import com.suuniv.afinal.paw.PawProfile;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -233,19 +234,7 @@ public class Profile extends AppCompatActivity {
 
 //        Intent intent = new Intent(NewMovieActivity.this, MovieMasterActivity.class);
         System.out.println("uname.getText().toString() "+uname.getText().toString());
-//        System.out.println("uname.getText().toString() "+year.getText().toString());
-//        System.out.println("uname.getText().toString() "+rating.getText().toString());
-//        System.out.println("uname.getText().toString() "+desc.getText().toString());
-//        System.out.println("uname.getText().toString() "+length.getText().toString());
-//        System.out.println("uname.getText().toString() "+director.getText().toString());
-//        System.out.println("uname.getText().toString() "+stars.getText().toString());
-//        intent.putExtra("u_name",uname.getText().toString());
-//        uploadImage(uname.getText().toString(),year.getText().toString(),
-//                rating.getText().toString(),desc.getText().toString(),
-//                length.getText().toString(),director.getText().toString()
-//                ,stars.getText().toString());
-//        startActivity(intent);
-//        finish();
+
         UserProfile userProfile = new UserProfile(uname.getText().toString(),dob.getText().toString(),
                 addressline1.getText().toString(),addressline2.getText().toString(),
                 city.getText().toString(),state.getText().toString()
@@ -261,28 +250,35 @@ public class Profile extends AppCompatActivity {
         final String fileNameInStorage= UUID.randomUUID().toString();
         String path="images/"+ fileNameInStorage+".jpg";
         final StorageReference imageRef=storage.getReference(path);
-        imageRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(final Uri uri) {
-                        System.out.println("uri la "+uri.toString());
+        if(imageUri==null){
+            Toast toast=Toast.makeText(this,"Please add Photo",Toast.LENGTH_SHORT);
+            toast.show();
+        }else{
+            imageRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(final Uri uri) {
+                            System.out.println("uri la "+uri.toString());
 
-                        String id = fileNameInStorage;
+                            String id = fileNameInStorage;
 
-                        userProfile.setProfileImage(uri.toString());
-                        userProfile.setUserId(currentUser.getUid());
+                            userProfile.setProfileImage(uri.toString());
+                            userProfile.setUserId(currentUser.getUid());
 
-                        DatabaseReference mDatabase;
+                            DatabaseReference mDatabase;
 // ...
-                        mDatabase = FirebaseDatabase.getInstance().getReference();
+                            mDatabase = FirebaseDatabase.getInstance().getReference();
 
-                        mDatabase.child("UserProfile").child(currentUser.getUid()).setValue(userProfile);
-                    }
-                });
-            }
-        });
+                            mDatabase.child("UserProfile").child(currentUser.getUid()).setValue(userProfile);
+                            startActivity(new Intent(getApplicationContext(),PawProfile.class));
+                        }
+                    });
+                }
+            });
+        }
+
     }
 
     @Override
