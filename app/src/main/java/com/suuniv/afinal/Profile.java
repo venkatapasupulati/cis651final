@@ -300,7 +300,7 @@ public class Profile extends AppCompatActivity {
                 mAuth.signOut();
                 finish();
                 return true;
-            case R.id.home:
+            case android.R.id.home:
                 onBackPressed();
                 return true;
 
