@@ -1,5 +1,11 @@
 package com.suuniv.afinal;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GestureDetectorCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -11,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,16 +40,15 @@ import com.suuniv.afinal.paw.PawProfile;
 
 import java.util.HashMap;
 
-public class NavigationDrawer extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class NavigationDrawer extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener {
 
+    private Uri imageUri=null;
     Toolbar toolbar;
     NavigationView navigationView;
     DrawerLayout drawerLayout;
     private FirebaseAuth mAuth;
 
     private FirebaseUser currentUser;
-
-
 
 
     @Override
@@ -107,44 +113,36 @@ public class NavigationDrawer extends AppCompatActivity implements NavigationVie
 
         });
 
+    getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new HomeFragment()).commit();
+
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
+        FirebaseDatabase database2 = FirebaseDatabase.getInstance();
+        DatabaseReference allPostsRef2 = database.getReference("UserProfile");
 
 
-        /*
-        allPostsRef.orderByChild("userId").equalTo(currentUser.getUid()).addChildEventListener(new ChildEventListener()   {
+        allPostsRef2.orderByChild("userId").equalTo(currentUser.getUid()).addChildEventListener(new ChildEventListener()  {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
-
                 UserProfile userProfiles = dataSnapshot.getValue(UserProfile.class);
-
-                System.out.println("doesn't have user setup");
-                if (userProfiles == null) {
-                    startActivity(new Intent(getApplicationContext(), Profile.class));
-
-                }
+                HashMap userProfile = (HashMap) dataSnapshot.getValue();
+                imageUri= Uri.parse(userProfiles.profileImage);
+                ImageView imageView = findViewById(R.id.image);
+                Picasso.get().load(userProfiles.getProfileImage()).into(imageView);
             }
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
             }
-
             @Override
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
             }
-
             @Override
             public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
-
-         */
-
 
     }
 
