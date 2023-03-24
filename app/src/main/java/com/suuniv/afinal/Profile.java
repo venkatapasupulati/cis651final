@@ -129,7 +129,7 @@ public class Profile extends AppCompatActivity {
                 city.setText(userProfiles.city);
                 state.setText(userProfiles.state);
                 zip.setText(userProfiles.zip);
-//                imageUri=Uri.parse(userProfiles.profileImage);
+                imageUri=Uri.parse(userProfiles.profileImage);
                 ImageView imageView = findViewById(R.id.previewImage);
                 Picasso.get().load(userProfiles.getProfileImage()).into(imageView);
             }
