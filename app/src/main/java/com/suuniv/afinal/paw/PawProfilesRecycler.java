@@ -139,6 +139,7 @@ public class PawProfilesRecycler extends RecyclerView.Adapter<PawProfilesRecycle
             System.out.println("onBINdholder "+u.getPaw_name());
             holder.name_v.setText(u.getPaw_name());
             holder.breed.setText(u.getBreed());
+            holder.quirks.setText(u.getQuirks());
             holder.vacinations.setText(u.getVaccinations());
 
             holder.extras_v.setOnClickListener(new View.OnClickListener() {
@@ -200,16 +201,11 @@ public class PawProfilesRecycler extends RecyclerView.Adapter<PawProfilesRecycle
                                     alert.show();
 
                                     return true;
-
                                 case R.id.update:
-
                                     return true;
-
                                 default:
                                     return false;
                             }
-
-
                         }
                     });
                 }
@@ -227,7 +223,7 @@ public class PawProfilesRecycler extends RecyclerView.Adapter<PawProfilesRecycle
     public static class ViewHolder extends RecyclerView.ViewHolder{
         public TextView name_v;
         public TextView age;
-
+        public TextView quirks;
         public TextView breed;
         public TextView vacinations;
         public ImageView imageView;
@@ -244,6 +240,8 @@ public class PawProfilesRecycler extends RecyclerView.Adapter<PawProfilesRecycle
             age=v.findViewById(R.id.age);
             breed=v.findViewById(R.id.breed);
             vacinations = v.findViewById(R.id.vaccinations);
+
+            quirks = v.findViewById(R.id.quirks);
 
             extras_v = v.findViewById(R.id.extras);
 

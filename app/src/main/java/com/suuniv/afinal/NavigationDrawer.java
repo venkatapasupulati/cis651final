@@ -36,7 +36,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+import com.suuniv.afinal.paw.PawModel;
 import com.suuniv.afinal.paw.PawProfile;
+import com.suuniv.afinal.paw.PawProfilesRecycler;
 
 import java.util.HashMap;
 
@@ -115,34 +117,10 @@ public class NavigationDrawer extends AppCompatActivity implements  NavigationVi
 
     getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new HomeFragment()).commit();
 
-        mAuth = FirebaseAuth.getInstance();
-        currentUser = mAuth.getCurrentUser();
-        FirebaseDatabase database2 = FirebaseDatabase.getInstance();
-        DatabaseReference allPostsRef2 = database.getReference("UserProfile");
 
 
-        allPostsRef2.orderByChild("userId").equalTo(currentUser.getUid()).addChildEventListener(new ChildEventListener()  {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
-                UserProfile userProfiles = dataSnapshot.getValue(UserProfile.class);
-                HashMap userProfile = (HashMap) dataSnapshot.getValue();
-                imageUri= Uri.parse(userProfiles.profileImage);
-                ImageView imageView = findViewById(R.id.image);
-                Picasso.get().load(userProfiles.getProfileImage()).into(imageView);
-            }
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-            }
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-            }
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
+
+
 
     }
 

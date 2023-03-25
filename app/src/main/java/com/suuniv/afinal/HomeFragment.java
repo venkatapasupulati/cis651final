@@ -30,6 +30,9 @@ public class HomeFragment extends Fragment {
 
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
+    private Uri imageUri=null;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference allPostsRef = database.getReference("UserProfile");
 
 
     @Nullable
@@ -56,6 +59,47 @@ public class HomeFragment extends Fragment {
                 showMap(ma);
             }
         });
+
+
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
+
+
+        allPostsRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                if(currentUser.getUid().equalsIgnoreCase(snapshot.child("userId").getValue().toString())) {
+                    UserProfile userProfiles = snapshot.getValue(UserProfile.class);
+                    HashMap userProfile = (HashMap) snapshot.getValue();
+                    imageUri= Uri.parse(userProfiles.profileImage);
+                    ImageView imageView = v.findViewById(R.id.image);
+                    Picasso.get().load(userProfiles.getProfileImage()).into(imageView);
+                }
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
         return v;
     }
 

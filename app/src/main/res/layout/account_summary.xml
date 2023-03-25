@@ -38,7 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:numStars="10"
-            android:stepSize="2"
+            android:stepSize="1"
             style="@style/CustomRatingBarStyle"
             />
     </LinearLayout>
@@ -56,19 +56,20 @@
 
     <Button
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/sms"
         android:text="SMS"
         android:onClick="sms"
-        tools:ignore="MissingConstraints"></Button>
+        app:layout_constraintTop_toBottomOf="@id/paymentMethod"
+        app:layout_constraintLeft_toLeftOf="parent"/>
 
     <Button
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/geoLocation"
         android:text="Location"
         app:layout_constraintTop_toBottomOf="@id/paymentMethod"
-        tools:ignore="MissingConstraints"></Button>
+        app:layout_constraintRight_toRightOf="parent"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
