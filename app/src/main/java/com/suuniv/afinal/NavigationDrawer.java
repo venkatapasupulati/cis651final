@@ -149,6 +149,12 @@ public class NavigationDrawer extends AppCompatActivity implements  NavigationVi
                 toast.show();
 //                startActivity(new Intent(this,MasterActivity.class));
                 break;
+            case R.id.item4:
+                break;
+            case R.id.item5:
+                break;
+            case R.id.item6:
+                break;
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);

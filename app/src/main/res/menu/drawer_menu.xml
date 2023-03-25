@@ -28,5 +28,10 @@
             android:title="Payment Method"
 
             />
+        <item android:id="@+id/item6"
+
+            android:title="Why is Dog Walking Important?"
+
+            />
     </group>
 </menu>
