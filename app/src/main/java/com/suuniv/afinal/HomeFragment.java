@@ -57,7 +57,7 @@ public class HomeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup container, @NonNull Bundle savedInstaceState){
-        View v = inflater.inflate(R.layout.account_summary,null,false);
+        View v = inflater.inflate(R.layout.account_summary,container,false);
 
         Button sms = v.findViewById(R.id.sms);
         sms.setOnClickListener(new View.OnClickListener() {

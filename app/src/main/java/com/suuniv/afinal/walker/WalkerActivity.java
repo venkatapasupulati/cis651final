@@ -14,6 +14,9 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -194,7 +197,7 @@ public class WalkerActivity extends AppCompatActivity {
         }
     }
 
-    public void uploadProfile(View view){
+    public void uploaddgProfile(View view){
 
 
 //        Intent intent = new Intent(NewMovieActivity.this, MovieMasterActivity.class);
@@ -243,4 +246,27 @@ public class WalkerActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.navigation_drawer, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        System.out.println("onoption "+item.getItemId());
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.signout:
+                mAuth.signOut();
+                finish();
+                return true;
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }

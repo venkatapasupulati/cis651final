@@ -1,20 +1,12 @@
-package com.suuniv.afinal;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GestureDetectorCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+package com.suuniv.afinal.walker;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -23,26 +15,22 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
-import com.suuniv.afinal.paw.PawModel;
+import com.suuniv.afinal.HomeFragment;
+import com.suuniv.afinal.PaymentMethod;
+import com.suuniv.afinal.R;
 import com.suuniv.afinal.paw.PawProfile;
-import com.suuniv.afinal.paw.PawProfilesRecycler;
 
-import java.util.HashMap;
-
-public class NavigationDrawer extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener {
+public class WalkerNavigation extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener {
 
     private Uri imageUri=null;
     Toolbar toolbar;
@@ -56,7 +44,7 @@ public class NavigationDrawer extends AppCompatActivity implements  NavigationVi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_navigation_drawer);
+        setContentView(R.layout.activity_walker_navigation);
         toolbar=(Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
@@ -102,7 +90,7 @@ public class NavigationDrawer extends AppCompatActivity implements  NavigationVi
                     //add some toast
 
                 } else {
-                    startActivity(new Intent(getApplicationContext(), Profile.class));
+                    startActivity(new Intent(getApplicationContext(), WalkerActivity.class));
 
                 }
             }
@@ -115,7 +103,7 @@ public class NavigationDrawer extends AppCompatActivity implements  NavigationVi
 
         });
 
-    getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new HomeFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new HomeFragment()).commit();
 
 
 
@@ -134,12 +122,12 @@ public class NavigationDrawer extends AppCompatActivity implements  NavigationVi
         switch (id)
         {
             case R.id.item1:
-                Toast toast=Toast.makeText(this,"Profile Clicked",Toast.LENGTH_SHORT);
+                Toast toast=Toast.makeText(this,"Item 1 Clicked",Toast.LENGTH_SHORT);
                 toast.show();
-                startActivity(new Intent(this,Profile.class));
+                startActivity(new Intent(this,WalkerActivity.class));
                 break;
             case R.id.item2:
-                toast=Toast.makeText(this,"PawProfile Clicked",Toast.LENGTH_SHORT);
+                toast=Toast.makeText(this,"ViewPager Clicked",Toast.LENGTH_SHORT);
                 toast.show();
 
                 startActivity(new Intent(this, PawProfile.class));
@@ -147,18 +135,18 @@ public class NavigationDrawer extends AppCompatActivity implements  NavigationVi
             case R.id.item3:
                 toast=Toast.makeText(this,"Item 3 Clicked",Toast.LENGTH_SHORT);
                 toast.show();
-//                startActivity(new Intent(this,MasterActivity.class));
+                startActivity(new Intent(this, PaymentMethod.class));
                 break;
             case R.id.item4:
-
                 break;
             case R.id.item5:
-                toast=Toast.makeText(this,"Payment Method Setup",Toast.LENGTH_SHORT);
-                toast.show();
-
-                startActivity(new Intent(this, PaymentMethod.class));
-
                 break;
+//            case R.id.item6:
+//                getSupportFragmentManager()
+//                        .beginTransaction()
+//                        .replace(R.id.main_container, new TrainingFragment())
+//                        .commit();
+//                break;
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);

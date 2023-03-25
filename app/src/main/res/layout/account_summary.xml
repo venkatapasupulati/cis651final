@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <com.google.android.material.imageview.ShapeableImageView
-
+        app:strokeColor="@null"
         android:layout_width="150dp"
         android:layout_height="150dp"
         app:layout_constraintTop_toTopOf="parent"
