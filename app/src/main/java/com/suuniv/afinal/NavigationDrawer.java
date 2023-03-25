@@ -159,9 +159,6 @@ public class NavigationDrawer extends AppCompatActivity implements  NavigationVi
                 startActivity(new Intent(this, PaymentMethod.class));
 
                 break;
-            case R.id.item6:
-
-                break;
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
