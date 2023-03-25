@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,9 +22,14 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.squareup.picasso.Picasso;
+import com.suuniv.afinal.paw.PawModel;
+import com.suuniv.afinal.paw.PawProfilesRecycler;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 
 public class HomeFragment extends Fragment {
@@ -33,6 +39,15 @@ public class HomeFragment extends Fragment {
     private Uri imageUri=null;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference allPostsRef = database.getReference("UserProfile");
+
+
+
+    DatabaseReference allPostsRef2 = database.getReference("Paws");
+    ChildEventListener usersRefListener;
+    private List<PawModel> pawModelList;
+
+    float numberOfDogs = 0;
+
 
 
     @Nullable
@@ -63,6 +78,8 @@ public class HomeFragment extends Fragment {
 
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
+
+
 
 
         allPostsRef.addChildEventListener(new ChildEventListener() {
@@ -99,6 +116,36 @@ public class HomeFragment extends Fragment {
             }
         });
 
+
+
+        //gets the rating to tell us how many dogs there are
+        pawModelList =new ArrayList<>();
+        allPostsRef2.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                RatingBar rating = v.findViewById(R.id.movie_rating);
+                if(currentUser.getUid().equalsIgnoreCase(snapshot.child("userId").getValue().toString())) {
+                    numberOfDogs = numberOfDogs +1;
+                    rating.setRating(numberOfDogs);
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
 
         return v;
     }

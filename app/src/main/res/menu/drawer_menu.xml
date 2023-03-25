@@ -22,5 +22,11 @@
             android:title="All Requests"
 
             />
+
+        <item android:id="@+id/item5"
+
+            android:title="Payment Method"
+
+            />
     </group>
 </menu>
