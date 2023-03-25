@@ -53,7 +53,6 @@ public class PawProfile extends AppCompatActivity {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment fragment = new PawFragment();
-        finish();
         fragmentManager.beginTransaction().replace(R.id.pawframe, fragment).commit();
     }
 

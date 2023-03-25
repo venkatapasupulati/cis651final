@@ -150,10 +150,17 @@ public class NavigationDrawer extends AppCompatActivity implements  NavigationVi
 //                startActivity(new Intent(this,MasterActivity.class));
                 break;
             case R.id.item4:
+
                 break;
             case R.id.item5:
+                toast=Toast.makeText(this,"Payment Method Setup",Toast.LENGTH_SHORT);
+                toast.show();
+
+                startActivity(new Intent(this, PaymentMethod.class));
+
                 break;
             case R.id.item6:
+
                 break;
         }
 

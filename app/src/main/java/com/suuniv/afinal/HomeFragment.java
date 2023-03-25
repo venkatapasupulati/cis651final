@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,9 +24,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 import com.suuniv.afinal.paw.PawModel;
 import com.suuniv.afinal.paw.PawProfilesRecycler;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -146,6 +150,64 @@ public class HomeFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
+
+
+
+
+
+        //tells us if the payment is setup
+        String currentUserString = currentUser.getUid();
+
+        DatabaseReference allPostsRef = FirebaseDatabase.getInstance().getReference("BankInfo/" + currentUserString);
+        allPostsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    TextView paymentSetUp = v.findViewById(R.id.answer);
+                    paymentSetUp.setText("Yes");
+                } else {
+                    TextView paymentSetUp = v.findViewById(R.id.answer);
+                    paymentSetUp.setText("No, please set up payment.");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed, how to handle?
+
+            }
+
+        });
+
+
+        //tells us if the payment is setup
+        allPostsRef = FirebaseDatabase.getInstance().getReference("Users/" + currentUserString + "/displayname");
+        allPostsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    TextView username = v.findViewById(R.id.userName);
+                    username.setText(snapshot.getValue().toString());
+                } else {
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed, how to handle?
+
+            }
+
+        });
+
+
+
+
+
+
+
 
         return v;
     }

@@ -18,12 +18,26 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/black"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/image"
+        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/userName"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/userName"
         android:id="@+id/dogsNumber"
         android:text="Dogs registered:"
         android:textSize="20dp"
         android:layout_marginTop="20dp"
+        android:textColor="@color/black"
+
         />
 
 
@@ -43,6 +57,7 @@
             android:stepSize="1"
             style="@style/CustomRatingBarStyle"
             android:isIndicator="true"
+
             />
     </LinearLayout>
 
@@ -55,6 +70,17 @@
         android:text="Payment Method Set-up:"
         android:textSize="20dp"
         android:layout_marginTop="20dp"
+        android:textColor="@color/black"
+
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@id/paymentMethod"
+        app:layout_constraintTop_toTopOf="@id/paymentMethod"
+        android:textColor="@color/black"
+        android:id="@+id/answer"
+        android:textSize="20dp"
         />
 
     <Button
