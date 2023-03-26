@@ -8,8 +8,12 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.RatingBar;
+import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -20,7 +24,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.suuniv.afinal.MainActivity;
+import com.suuniv.afinal.NavigationDrawer;
 import com.suuniv.afinal.R;
+import com.suuniv.afinal.User;
 import com.suuniv.afinal.paw.PawModel;
 import com.suuniv.afinal.paw.PawProfilesRecycler;
 
@@ -72,20 +80,23 @@ public class WalkerPagerActivity extends AppCompatActivity {
                 walkerProfile.setState(snapshot.child("state").getValue().toString());
                 walkerProfile.setProfileImage(snapshot.child("profileImage").getValue().toString());
                 walkerProfile.setZip(snapshot.child("zip").getValue().toString());
+                walkerProfile.setCity(snapshot.child("city").getValue().toString());
+                if(snapshot.child("price").getValue()!=null){
+                    walkerProfile.setPrice(snapshot.child("price").getValue().toString());
+                }
+                if(snapshot.child("phone").getValue()!=null){
+                    walkerProfile.setPhone(snapshot.child("phone").getValue().toString());
+                }
+
+                String utype="";
+               if(snapshot.child("userType").getValue()!=null){
+                   utype=snapshot.child("userType").getValue().toString();
+               }
+               if(utype.equalsIgnoreCase("DOGWALKER")){
+                   md_list.add(walkerProfile);
+               }
 
 
-                md_list.add(walkerProfile);
-
-//                if(currentUser.getUid().equalsIgnoreCase(snapshot.child("userId").getValue().toString())) {
-//                    walkerProfile.setUserId(snapshot.child("userId").getValue().toString());
-//                    pawModel.setPaw_name(snapshot.child("paw_name").getValue().toString());
-//                    pawModel.setVaccinations(snapshot.child("vaccinations").getValue().toString());
-//                    pawModel.setBreed(snapshot.child("breed").getValue().toString());
-//                    pawModel.setAge(snapshot.child("age").getValue().toString());
-//                    pawModel.setQuirks(snapshot.child("quirks").getValue().toString());
-//                    pawModel.setPid(snapshot.child("pid").getValue().toString());
-//                    pawModelList.add(pawModel);
-//                }
 
                 System.out.println("md_list "+md_list.size());
                 walkerViewPagerAdapter =new WalkerViewPagerAdapter(WalkerPagerActivity.this,md_list);
@@ -154,16 +165,6 @@ public class WalkerPagerActivity extends AppCompatActivity {
 
                 md_list.add(walkerProfile);
 
-//                if(currentUser.getUid().equalsIgnoreCase(snapshot.child("userId").getValue().toString())) {
-//                    walkerProfile.setUserId(snapshot.child("userId").getValue().toString());
-//                    pawModel.setPaw_name(snapshot.child("paw_name").getValue().toString());
-//                    pawModel.setVaccinations(snapshot.child("vaccinations").getValue().toString());
-//                    pawModel.setBreed(snapshot.child("breed").getValue().toString());
-//                    pawModel.setAge(snapshot.child("age").getValue().toString());
-//                    pawModel.setQuirks(snapshot.child("quirks").getValue().toString());
-//                    pawModel.setPid(snapshot.child("pid").getValue().toString());
-//                    pawModelList.add(pawModel);
-//                }
 
 
             }

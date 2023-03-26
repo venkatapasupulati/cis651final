@@ -72,10 +72,14 @@ public class MainActivity extends AppCompatActivity {
                             if("userType".equalsIgnoreCase(snapshot.getKey())){
                                 System.out.println("val2 "+snapshot.getValue());
                                 if("DOGOWNER".equalsIgnoreCase((String) snapshot.getValue())){
-                                    startActivity(new Intent(MainActivity.this, NavigationDrawer.class));
+                                    Intent intent = new Intent(MainActivity.this, NavigationDrawer.class);
+                                    intent.putExtra("userType",(String) snapshot.getValue());
+                                    startActivity(intent);
                                     finish();
                                 }else{
-                                    startActivity(new Intent(MainActivity.this, WalkerNavigation.class));
+                                    Intent intent = new Intent(MainActivity.this, WalkerNavigation.class);
+                                    intent.putExtra("userType",(String) snapshot.getValue());
+                                    startActivity(intent);
                                     finish();
                                 }
                             }

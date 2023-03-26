@@ -35,6 +35,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.firebase.auth.FirebaseAuth;
@@ -45,13 +46,16 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 import com.suuniv.afinal.paw.PawProfile;
+import com.suuniv.afinal.walker.WalkerPagerActivity;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -83,9 +87,7 @@ public class Profile extends AppCompatActivity {
     private int REQUEST_CODE_PERMISSIONS = 1001;
     private final String[] REQUIRED_PERMISSIONS = new String[]{"android.permission.CAMERA", "android.permission.WRITE_EXTERNAL_STORAGE"};
 
-    PreviewView mPreviewView;
-    ImageView captureImage;
-    Button clic ;
+   String userType="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +96,7 @@ public class Profile extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
+        userType= getIntent().getStringExtra("userType");
         if (getSupportActionBar() != null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -130,9 +133,41 @@ public class Profile extends AppCompatActivity {
                 city.setText(userProfiles.city);
                 state.setText(userProfiles.state);
                 zip.setText(userProfiles.zip);
-                imageUri=Uri.parse(userProfiles.profileImage);
+
+
                 ImageView imageView = findViewById(R.id.previewImage);
                 Picasso.get().load(userProfiles.getProfileImage()).into(imageView);
+
+                if(userProfiles.profileImage!=null){
+                    FirebaseStorage storage1= FirebaseStorage.getInstance();
+
+                    StorageReference httpsReference = storage1.getReferenceFromUrl(userProfiles.profileImage);
+//
+
+                    File localFile = null;
+                    try {
+                        localFile = File.createTempFile("images", "jpg");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    httpsReference.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                            // Local temp file has been created
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            // Handle any errors
+                        }
+                    });
+
+//
+                    Uri uri = Uri.fromFile(localFile);
+                    imageUri=uri;
+                }
+
             }
 
             @Override
@@ -266,7 +301,7 @@ public class Profile extends AppCompatActivity {
 
                             userProfile.setProfileImage(uri.toString());
                             userProfile.setUserId(currentUser.getUid());
-//                            userProfile.setUserType(currentUser.get);
+                            userProfile.setUserType(userType);
 
                             DatabaseReference mDatabase;
 // ...
@@ -306,113 +341,4 @@ public class Profile extends AppCompatActivity {
         }
     }
 
-//    private void startCamera() {
-//
-//        final ListenableFuture<ProcessCameraProvider> cameraProviderFuture = ProcessCameraProvider.getInstance(this);
-//
-//        cameraProviderFuture.addListener(new Runnable() {
-//            @Override
-//            public void run() {
-//                try {
-//
-//                    ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
-//                    bindPreview(cameraProvider);
-//
-//                } catch (ExecutionException | InterruptedException e) {
-//                    // No errors need to be handled for this Future.
-//                    // This should never be reached.
-//                }
-//            }
-//        }, ContextCompat.getMainExecutor(this));
-//    }
-//
-//    void bindPreview(@NonNull ProcessCameraProvider cameraProvider) {
-//
-//        Preview preview = new Preview.Builder()
-//                .build();
-//
-//        CameraSelector cameraSelector = new CameraSelector.Builder()
-//                .requireLensFacing(CameraSelector.LENS_FACING_BACK)
-//                .build();
-//
-////        ImageAnalysis imageAnalysis = new ImageAnalysis.Builder()
-////                .build();
-////
-//        ImageCapture.Builder builder = new ImageCapture.Builder();
-////
-////        //Vendor-Extensions (The CameraX extensions dependency in build.gradle)
-////        HdrImageCaptureExtender hdrImageCaptureExtender = HdrImageCaptureExtender.create(builder);
-////
-////        // Query if extension is available (optional).
-////        if (hdrImageCaptureExtender.isExtensionAvailable(cameraSelector)) {
-////            // Enable the extension if available.
-////            hdrImageCaptureExtender.enableExtension(cameraSelector);
-////        }
-////
-//        final ImageCapture imageCapture = builder
-//                .setTargetRotation(this.getWindowManager().getDefaultDisplay().getRotation())
-//                .build();
-//        preview.setSurfaceProvider(mPreviewView.createSurfaceProvider());
-//        Camera camera = cameraProvider.bindToLifecycle((LifecycleOwner)this, cameraSelector, preview, imageCapture);
-//
-//        clic.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                SimpleDateFormat mDateFormat = new SimpleDateFormat("yyyyMMddHHmmss", Locale.US);
-//                File file = new File(getBatchDirectoryName(), mDateFormat.format(new Date())+ ".jpg");
-//
-//                ImageCapture.OutputFileOptions outputFileOptions = new ImageCapture.OutputFileOptions.Builder(file).build();
-//                imageCapture.takePicture(outputFileOptions, executor, new ImageCapture.OnImageSavedCallback () {
-//                    @Override
-//                    public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
-//                        new Handler().post(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                Toast.makeText(Profile.this, "Image Saved successfully", Toast.LENGTH_SHORT).show();
-//                            }
-//                        });
-//                    }
-//                    @Override
-//                    public void onError(@NonNull ImageCaptureException error) {
-//                        error.printStackTrace();
-//                    }
-//                });
-//            }
-//        });
-//    }
-//
-//    public String getBatchDirectoryName() {
-//
-//        String app_folder_path = "";
-//        app_folder_path = Environment.getExternalStorageDirectory().toString() + "/images";
-//        File dir = new File(app_folder_path);
-//        if (!dir.exists() && !dir.mkdirs()) {
-//
-//        }
-//
-//        return app_folder_path;
-//    }
-
-//    private boolean allPermissionsGranted(){
-//
-//        for(String permission : REQUIRED_PERMISSIONS){
-//            if(ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED){
-//                return false;
-//            }
-//        }
-//        return true;
-//    }
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-//
-//        if(requestCode == REQUEST_CODE_PERMISSIONS){
-//            if(allPermissionsGranted()){
-//                startCamera();
-//            } else{
-//                Toast.makeText(this, "Permissions not granted by the user.", Toast.LENGTH_SHORT).show();
-//                this.finish();
-//            }
-//        }
-//    }
 }

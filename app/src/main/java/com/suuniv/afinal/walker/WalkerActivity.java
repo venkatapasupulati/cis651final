@@ -22,6 +22,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -30,6 +31,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -37,6 +39,8 @@ import com.squareup.picasso.Picasso;
 import com.suuniv.afinal.R;
 import com.suuniv.afinal.UserProfile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -53,6 +57,7 @@ public class WalkerActivity extends AppCompatActivity {
     EditText city ;
     EditText state;
     EditText zip ;
+    String usertype="";
 
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
@@ -62,6 +67,7 @@ public class WalkerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_walker);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
+        usertype=  getIntent().getStringExtra("userType");
 
         if (getSupportActionBar() != null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -81,7 +87,6 @@ public class WalkerActivity extends AppCompatActivity {
         city = findViewById(R.id.city);
         state = findViewById(R.id.state);
         zip = findViewById(R.id.zip);
-        Uri uri;
 
 
         allPostsRef.orderByChild("userId").equalTo(currentUser.getUid()).addChildEventListener(new ChildEventListener()  {
@@ -99,13 +104,39 @@ public class WalkerActivity extends AppCompatActivity {
                 city.setText(userProfiles.city);
                 state.setText(userProfiles.state);
                 zip.setText(userProfiles.zip);
-                imageUri=Uri.parse(userProfiles.profileImage);
+//                imageUri=Uri.parse(userProfiles.profileImage);
                 ImageView imageView = findViewById(R.id.previewImage);
 
                 Picasso.get().load(userProfiles.getProfileImage()).into(imageView);
-                imageUri = Uri.parse(userProfiles.getProfileImage());
-                imageUri=Uri.parse(userProfiles.profileImage);
+                if(userProfiles.profileImage!=null){
+                    FirebaseStorage storage1= FirebaseStorage.getInstance();
 
+                    StorageReference httpsReference = storage1.getReferenceFromUrl(userProfiles.profileImage);
+//
+
+                    File localFile = null;
+                    try {
+                        localFile = File.createTempFile("images", "jpg");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    httpsReference.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                            // Local temp file has been created
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            // Handle any errors
+                        }
+                    });
+
+//
+                    Uri uri = Uri.fromFile(localFile);
+                    imageUri=uri;
+                }
             }
 
             @Override
@@ -239,6 +270,7 @@ public class WalkerActivity extends AppCompatActivity {
 
                         userProfile.setProfileImage(uri.toString());
                         userProfile.setUserId(currentUser.getUid());
+                        userProfile.setUserType(usertype);
 
                         DatabaseReference mDatabase;
 // ...

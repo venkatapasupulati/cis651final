@@ -40,7 +40,7 @@ public class WalkerNavigation extends AppCompatActivity implements  NavigationVi
 
     private FirebaseUser currentUser;
 
-
+    String usertype="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +51,7 @@ public class WalkerNavigation extends AppCompatActivity implements  NavigationVi
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 //        getSupportActionBar().setIcon(R.drawable.ic_baseline_exit_to_app_24);
 
+        usertype=  getIntent().getStringExtra("userType");
         mAuth = FirebaseAuth.getInstance();
         navigationView=(NavigationView)findViewById(R.id.navigation_view);
         drawerLayout=(DrawerLayout)findViewById(R.id.drawer);
@@ -124,7 +125,9 @@ public class WalkerNavigation extends AppCompatActivity implements  NavigationVi
             case R.id.item1:
                 Toast toast=Toast.makeText(this,"Item 1 Clicked",Toast.LENGTH_SHORT);
                 toast.show();
-                startActivity(new Intent(this,WalkerActivity.class));
+                Intent intent = new Intent(this,WalkerActivity.class);
+                intent.putExtra("userType",usertype);
+                startActivity(intent);
                 break;
             case R.id.item2:
                 toast=Toast.makeText(this,"ViewPager Clicked",Toast.LENGTH_SHORT);

@@ -53,6 +53,7 @@ public class NavigationDrawer extends AppCompatActivity implements  NavigationVi
 
     private FirebaseUser currentUser;
 
+    String usertype="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +65,7 @@ public class NavigationDrawer extends AppCompatActivity implements  NavigationVi
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 //        getSupportActionBar().setIcon(R.drawable.ic_baseline_exit_to_app_24);
 
+        usertype=  getIntent().getStringExtra("userType");
         mAuth = FirebaseAuth.getInstance();
         navigationView=(NavigationView)findViewById(R.id.navigation_view);
         drawerLayout=(DrawerLayout)findViewById(R.id.drawer);
@@ -103,7 +105,9 @@ public class NavigationDrawer extends AppCompatActivity implements  NavigationVi
                     //add some toast
 
                 } else {
-                    startActivity(new Intent(getApplicationContext(), Profile.class));
+                    Intent  intent =new Intent(getApplicationContext(),Profile.class);
+                    intent.putExtra("userType",usertype);
+                    startActivity(intent);
 
                 }
             }
@@ -137,7 +141,9 @@ public class NavigationDrawer extends AppCompatActivity implements  NavigationVi
             case R.id.item1:
                 Toast toast=Toast.makeText(this,"Profile Clicked",Toast.LENGTH_SHORT);
                 toast.show();
-                startActivity(new Intent(this,Profile.class));
+                Intent  intent =new Intent(this,Profile.class);
+                intent.putExtra("userType",usertype);
+                startActivity(intent);
                 break;
             case R.id.item2:
                 toast=Toast.makeText(this,"PawProfile Clicked",Toast.LENGTH_SHORT);

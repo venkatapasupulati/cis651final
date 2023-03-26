@@ -14,6 +14,16 @@ public class WalkerProfile {
     public String userId;
     public String profileImage;
 
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
+    public String userType;
+
     public String getName() {
         return name;
     }
