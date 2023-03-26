@@ -100,7 +100,9 @@ public class WalkerActivity extends AppCompatActivity {
                 zip.setText(userProfiles.zip);
 //                imageUri=Uri.parse(userProfiles.profileImage);
                 ImageView imageView = findViewById(R.id.previewImage);
+
                 Picasso.get().load(userProfiles.getProfileImage()).into(imageView);
+                imageUri = Uri.parse(userProfiles.getProfileImage());
             }
 
             @Override

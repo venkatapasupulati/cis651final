@@ -9,6 +9,16 @@ public class UserProfile {
     public String addressline2;
     public String city;
 
+    public String userType;
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
     public String getUserId() {
         return userId;
     }

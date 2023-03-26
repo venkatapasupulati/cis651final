@@ -130,7 +130,7 @@ public class WalkerNavigation extends AppCompatActivity implements  NavigationVi
                 toast=Toast.makeText(this,"ViewPager Clicked",Toast.LENGTH_SHORT);
                 toast.show();
 
-                startActivity(new Intent(this, PawProfile.class));
+                startActivity(new Intent(this, WalkerPagerActivity.class));
                 break;
             case R.id.item3:
                 toast=Toast.makeText(this,"Item 3 Clicked",Toast.LENGTH_SHORT);

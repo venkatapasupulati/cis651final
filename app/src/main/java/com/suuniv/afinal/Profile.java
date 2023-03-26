@@ -266,6 +266,7 @@ public class Profile extends AppCompatActivity {
 
                             userProfile.setProfileImage(uri.toString());
                             userProfile.setUserId(currentUser.getUid());
+//                            userProfile.setUserType(currentUser.get);
 
                             DatabaseReference mDatabase;
 // ...

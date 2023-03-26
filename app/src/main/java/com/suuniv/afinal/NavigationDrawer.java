@@ -39,6 +39,7 @@ import com.squareup.picasso.Picasso;
 import com.suuniv.afinal.paw.PawModel;
 import com.suuniv.afinal.paw.PawProfile;
 import com.suuniv.afinal.paw.PawProfilesRecycler;
+import com.suuniv.afinal.walker.WalkerPagerActivity;
 
 import java.util.HashMap;
 
@@ -147,7 +148,7 @@ public class NavigationDrawer extends AppCompatActivity implements  NavigationVi
             case R.id.item3:
                 toast=Toast.makeText(this,"Item 3 Clicked",Toast.LENGTH_SHORT);
                 toast.show();
-//                startActivity(new Intent(this,MasterActivity.class));
+                startActivity(new Intent(this, WalkerPagerActivity.class));
                 break;
             case R.id.item4:
 
