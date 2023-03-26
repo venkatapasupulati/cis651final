@@ -81,6 +81,7 @@ public class WalkerActivity extends AppCompatActivity {
         city = findViewById(R.id.city);
         state = findViewById(R.id.state);
         zip = findViewById(R.id.zip);
+        Uri uri;
 
 
         allPostsRef.orderByChild("userId").equalTo(currentUser.getUid()).addChildEventListener(new ChildEventListener()  {
@@ -98,11 +99,13 @@ public class WalkerActivity extends AppCompatActivity {
                 city.setText(userProfiles.city);
                 state.setText(userProfiles.state);
                 zip.setText(userProfiles.zip);
-//                imageUri=Uri.parse(userProfiles.profileImage);
+                imageUri=Uri.parse(userProfiles.profileImage);
                 ImageView imageView = findViewById(R.id.previewImage);
 
                 Picasso.get().load(userProfiles.getProfileImage()).into(imageView);
                 imageUri = Uri.parse(userProfiles.getProfileImage());
+                imageUri=Uri.parse(userProfiles.profileImage);
+
             }
 
             @Override

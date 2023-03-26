@@ -34,6 +34,7 @@ public class WalkerInfoFragment extends Fragment {
         ((TextView) rootView.findViewById(R.id.name)).setText(args.getString("name"));
         ((TextView) rootView.findViewById(R.id.state)).setText(args.getString("state"));
         ((TextView) rootView.findViewById(R.id.zip)).setText(args.getString("zip"));
+        ((TextView) rootView.findViewById(R.id.price)).setText(args.getString("price"));
 
         return rootView;
     }

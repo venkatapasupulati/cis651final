@@ -3,6 +3,7 @@ package com.suuniv.afinal.paw;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -31,6 +33,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.suuniv.afinal.R;
+import com.suuniv.afinal.walker.WalkerPagerActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -202,6 +205,8 @@ public class PawProfilesRecycler extends RecyclerView.Adapter<PawProfilesRecycle
 
                                     return true;
                                 case R.id.update:
+                                    Intent intent = (new Intent(view.getContext(), WalkerPagerActivity.class));
+                                    r.getContext().startActivity(intent);
                                     return true;
                                 default:
                                     return false;

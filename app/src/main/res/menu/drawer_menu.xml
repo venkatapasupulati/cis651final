@@ -12,16 +12,6 @@
             android:title="My Paw's Profile"
 
             />
-        <item android:id="@+id/item3"
-
-            android:title="Request Walkers"
-
-            />
-        <item android:id="@+id/item4"
-
-            android:title="All Requests"
-
-            />
 
         <item android:id="@+id/item5"
 

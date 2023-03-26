@@ -36,6 +36,7 @@ public class WalkerViewPagerAdapter  extends FragmentStateAdapter {
         args.putString("state",walkerProfiles.get(i).getState());
         args.putString("zip",walkerProfiles.get(i).getZip());
         args.putString("image",walkerProfiles.get(i).getProfileImage());
+        args.putString("price",walkerProfiles.get(i).getPrice());
         fragment.setArguments(args);
         return fragment;
     }

@@ -137,8 +137,7 @@ public class WalkerNavigation extends AppCompatActivity implements  NavigationVi
                 toast.show();
                 startActivity(new Intent(this, PaymentMethod.class));
                 break;
-            case R.id.item4:
-                break;
+
             case R.id.item5:
                 break;
 //            case R.id.item6:

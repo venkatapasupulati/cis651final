@@ -73,6 +73,7 @@ public class WalkerPagerActivity extends AppCompatActivity {
                 walkerProfile.setProfileImage(snapshot.child("profileImage").getValue().toString());
                 walkerProfile.setZip(snapshot.child("zip").getValue().toString());
 
+
                 md_list.add(walkerProfile);
 
 //                if(currentUser.getUid().equalsIgnoreCase(snapshot.child("userId").getValue().toString())) {

@@ -67,40 +67,40 @@
                 android:id="@+id/dg_name"
                 android:hint="My Name"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"></EditText>
+                android:layout_height="wrap_content"/>
             <EditText
                 android:hint="Price"
                 android:id="@+id/price"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"></EditText>
+                android:layout_height="wrap_content"/>
             <EditText
                 android:hint="Dog Preferences"
                 android:id="@+id/dogPref"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"></EditText>
+                android:layout_height="wrap_content"/>
             <EditText
                 android:hint="Phone Number"
                 android:id="@+id/phone"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"></EditText>
+                android:layout_height="wrap_content"/>
 
             <EditText
                 android:hint="City"
                 android:id="@+id/city"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"></EditText>
+                android:layout_height="wrap_content"/>
 
             <EditText
                 android:hint="State"
                 android:id="@+id/state"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"></EditText>
+                android:layout_height="wrap_content"/>
 
             <EditText
                 android:hint="Zip"
                 android:id="@+id/zip"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"></EditText>
+                android:layout_height="wrap_content"/>
 
 
             <Button
