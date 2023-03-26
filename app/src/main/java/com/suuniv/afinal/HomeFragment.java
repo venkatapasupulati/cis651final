@@ -70,15 +70,6 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        Button geo = v.findViewById(R.id.geoLocation);
-
-        geo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Uri ma = Uri.parse("geo:0,0?q=1600+Amphitheatre+Parkway%2C+CA");
-                showMap(ma);
-            }
-        });
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -265,11 +256,5 @@ public class HomeFragment extends Fragment {
         context.startActivity(it);
     }
 
-    public void showMap(Uri geoLocation) {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(geoLocation);
-        if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
-            startActivity(intent);
-        }
-    }
+
 }

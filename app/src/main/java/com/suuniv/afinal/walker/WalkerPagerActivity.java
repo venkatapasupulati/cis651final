@@ -8,12 +8,8 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.RatingBar;
-import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -24,11 +20,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.suuniv.afinal.MainActivity;
-import com.suuniv.afinal.NavigationDrawer;
 import com.suuniv.afinal.R;
-import com.suuniv.afinal.User;
 import com.suuniv.afinal.paw.PawModel;
 import com.suuniv.afinal.paw.PawProfilesRecycler;
 
@@ -162,6 +154,9 @@ public class WalkerPagerActivity extends AppCompatActivity {
                 walkerProfile.setState(snapshot.child("state").getValue().toString());
                 walkerProfile.setProfileImage(snapshot.child("profileImage").getValue().toString());
                 walkerProfile.setZip(snapshot.child("zip").getValue().toString());
+                walkerProfile.setCity(snapshot.child("city").getValue().toString());
+                //walkerProfile.setCity(snapshot.child("price").getValue().toString());
+
 
                 md_list.add(walkerProfile);
 

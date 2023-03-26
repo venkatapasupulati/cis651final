@@ -1,5 +1,7 @@
 package com.suuniv.afinal.walker;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -34,8 +37,30 @@ public class WalkerInfoFragment extends Fragment {
         ((TextView) rootView.findViewById(R.id.name)).setText(args.getString("name"));
         ((TextView) rootView.findViewById(R.id.state)).setText(args.getString("state"));
         ((TextView) rootView.findViewById(R.id.zip)).setText(args.getString("zip"));
-        ((TextView) rootView.findViewById(R.id.price)).setText(args.getString("price"));
+        ((TextView) rootView.findViewById(R.id.city)).setText(args.getString("city"));
+        //((TextView) rootView.findViewById(R.id.price)).setText(args.getString("price"));
+
+
+        Button geo = rootView.findViewById(R.id.geoLocation);
+
+        geo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri ma = Uri.parse("geo:0,0?q=1600+Amphitheatre+Parkway%2C+CA");
+                showMap(ma);
+            }
+        });
+
+
 
         return rootView;
+    }
+
+    public void showMap(Uri geoLocation) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(geoLocation);
+        if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+            startActivity(intent);
+        }
     }
 }
