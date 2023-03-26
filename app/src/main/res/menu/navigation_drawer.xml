@@ -7,6 +7,14 @@
         android:id="@+id/signout"
         android:title="Sign Out">
     </item>
+
+    <item
+        android:icon="@drawable/notification_menu"
+        app:showAsAction="ifRoom"
+        android:id="@+id/not"
+        android:title="Sign Out">
+    </item>
+
     <item android:id="@+id/action_settings"
         android:title="@string/action_settings"
         android:orderInCategory="100"
