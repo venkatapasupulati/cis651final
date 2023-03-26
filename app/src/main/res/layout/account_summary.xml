@@ -67,7 +67,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/dogsNumber"
         android:id="@+id/paymentMethod"
-        android:text="Payment Method Set-up:"
+        android:text="Payment Method:"
         android:textSize="20dp"
         android:layout_marginTop="20dp"
         android:textColor="@color/black"
@@ -80,6 +80,7 @@
         app:layout_constraintTop_toTopOf="@id/paymentMethod"
         android:textColor="@color/black"
         android:id="@+id/answer"
+        android:text=" "
         android:textSize="20dp"
         />
 
@@ -99,6 +100,19 @@
         android:text="Location"
         app:layout_constraintTop_toBottomOf="@id/paymentMethod"
         app:layout_constraintRight_toRightOf="parent"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/paymentMethod"
+        android:textSize="35dp"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/black"
+        android:text="$0.00"
+        android:id="@+id/earnings"
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

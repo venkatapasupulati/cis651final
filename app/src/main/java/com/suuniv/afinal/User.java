@@ -13,7 +13,7 @@ public class User {
         this.email=email;
         this.phone=phone;
         this.timestamp= ServerValue.TIMESTAMP;
-        this.userType = userType;
+        this.userType =userType;
     }
     public Object getTimestamp(){
         return timestamp;

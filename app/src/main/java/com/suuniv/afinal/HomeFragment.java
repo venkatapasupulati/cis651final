@@ -43,6 +43,7 @@ public class HomeFragment extends Fragment {
     private Uri imageUri=null;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference allPostsRef = database.getReference("UserProfile");
+    String usetype = "";
 
 
 
@@ -168,7 +169,7 @@ public class HomeFragment extends Fragment {
                     paymentSetUp.setText("Yes");
                 } else {
                     TextView paymentSetUp = v.findViewById(R.id.answer);
-                    paymentSetUp.setText("No, please set up payment.");
+                    paymentSetUp.setText("Set up payment.");
                 }
             }
 
@@ -202,6 +203,50 @@ public class HomeFragment extends Fragment {
 
         });
 
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
+        currentUserString = currentUser.getUid();
+
+
+        //tells us if they are a dog owner
+        allPostsRef = FirebaseDatabase.getInstance().getReference("Users/" + currentUserString);
+        allPostsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+
+                    User User = snapshot.getValue(User.class);
+                    TextView bankNumber=v.findViewById(R.id.paymentMethod);
+                    usetype = User.getUserType().toString();
+
+
+
+
+                    if(usetype.equalsIgnoreCase("DOGOWNER")){
+                        System.out.println("true");
+                        TextView earning = v.findViewById(R.id.earnings);
+                        earning.setVisibility(View.GONE);
+                    }
+                    else{
+                        TextView dogs = v.findViewById(R.id.dogsNumber);
+                        dogs.setVisibility(View.GONE);
+                        RatingBar rating = v.findViewById(R.id.movie_rating);
+                        rating.setVisibility(View.GONE);
+
+                    }
+                } else {
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed, how to handle?
+
+            }
+
+        });
 
 
 

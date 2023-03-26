@@ -108,7 +108,7 @@ public class SignupLogin extends AppCompatActivity {
         if(iswalker){
             type = "DOGWALKER";
         }else{
-            type ="DOGOWNER";
+            type ="c";
         }
         usersRef.child(currentUser.getUid()).setValue(new User(displayname.getText().toString(),
                 email.getText().toString(), phonenumber.getText().toString(),
