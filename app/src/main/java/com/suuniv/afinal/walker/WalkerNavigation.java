@@ -4,12 +4,18 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NotificationCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,12 +31,15 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.suuniv.afinal.Destination;
 import com.suuniv.afinal.HomeFragment;
 import com.suuniv.afinal.PaymentMethod;
 import com.suuniv.afinal.R;
-import com.suuniv.afinal.paw.PawProfile;
 
 public class WalkerNavigation extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener {
+
+    public static final String CHANNEL_ID ="4" ;
+    public static final String N_ID ="12" ;
 
     private Uri imageUri=null;
     Toolbar toolbar;
@@ -41,9 +50,14 @@ public class WalkerNavigation extends AppCompatActivity implements  NavigationVi
     private FirebaseUser currentUser;
 
     String usertype="";
+    int i=0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        createNotificationChannel();
+
+
         setContentView(R.layout.activity_walker_navigation);
         toolbar=(Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
@@ -107,6 +121,59 @@ public class WalkerNavigation extends AppCompatActivity implements  NavigationVi
         getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new HomeFragment()).commit();
 
 
+        //hopefully send notification
+        final FirebaseDatabase fireBaseData = FirebaseDatabase.getInstance();
+        final DatabaseReference ref = fireBaseData.getReference();
+        ref.child("Request").addValueEventListener(new ValueEventListener(){
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                //filter so we only see our user id being added
+
+                final Iterable<DataSnapshot> children = snapshot.getChildren();
+
+                for (DataSnapshot imageSnapshot : snapshot.getChildren()) {
+
+
+                    //Put this in a wrapper so they only get their
+
+                    if(true){
+                    Intent resultIntent = new Intent(getApplicationContext(), Destination.class);
+                    // Create pending intent and wrap our intent
+                    PendingIntent resultPendingIntent = PendingIntent.getActivity(getApplicationContext(), 1, resultIntent,
+                            PendingIntent.FLAG_CANCEL_CURRENT); // flag: cancel any existing  pending intent
+
+                    // create  Notification Builder
+                    NotificationCompat.Builder mBuilder =
+                            new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
+                                    .setSmallIcon(R.drawable.ic_stat_name)
+                                    .setContentTitle("New Notification")
+                                    .setContentText("You have been asked to walk a dog.").setAutoCancel(true); // set auto cancel force a notification to be automatically dismissed
+                    mBuilder.setContentIntent(resultPendingIntent);
+
+                    // create  Notification Manager
+                    NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                    mNotificationManager.notify(i, mBuilder.build()); //notification ID, actual notification object.
+                    i++;
+                    }
+
+
+
+
+
+
+
+                }
+            }
+
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
 
 
@@ -177,4 +244,23 @@ public class WalkerNavigation extends AppCompatActivity implements  NavigationVi
                 return super.onOptionsItemSelected(item);
         }
     }
+
+
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "CIS651";
+            String description = "Week5 Channel Description";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
+
 }

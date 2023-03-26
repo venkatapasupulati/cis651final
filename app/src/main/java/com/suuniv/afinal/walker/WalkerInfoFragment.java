@@ -53,6 +53,17 @@ public class WalkerInfoFragment extends Fragment {
 
 
 
+        Button walk = rootView.findViewById(R.id.requestWalk);
+
+        geo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+
+
         return rootView;
     }
 
