@@ -1,0 +1,122 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginRight="10dp"
+    card_view:cardBackgroundColor="@color/gray"
+    card_view:cardCornerRadius="10dp"
+    card_view:cardElevation="5dp"
+    card_view:cardUseCompatPadding="true">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        android:weightSum="3"
+        app:cardCornerRadius="15dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:padding="15dp"
+            >
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Request Name: "
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:id="@+id/name"
+                android:textColor="@color/black"
+                />
+
+            <TextView
+                android:id="@+id/requester_name"
+                android:hint="Requester name:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toRightOf="@id/name"
+                app:layout_constraintTop_toTopOf="@id/name"
+                android:textColor="@color/black"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Breed: "
+                app:layout_constraintTop_toBottomOf="@id/requester_name"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:id="@+id/breedType"
+                android:textColor="@color/black"
+                />
+
+
+            <TextView
+                android:hint="Breed"
+                android:id="@+id/breed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toRightOf="@id/breedType"
+                app:layout_constraintTop_toTopOf="@id/breedType"
+                android:textColor="@color/black"
+                />
+
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/accept"
+                android:text="Accept"
+
+                app:layout_constraintTop_toBottomOf="@id/breed"
+                app:layout_constraintLeft_toLeftOf="parent"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/reject"
+                android:text="Reject"
+
+                app:layout_constraintTop_toBottomOf="@id/breed"
+                app:layout_constraintLeft_toRightOf="@+id/accept"/>
+
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/done"
+                android:text="Done"
+
+                app:layout_constraintTop_toBottomOf="@id/breed"
+                app:layout_constraintLeft_toRightOf="@+id/reject"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/extras"
+            android:layout_width="30dp"
+            android:layout_height="50dp"
+            android:layout_gravity="right"
+            android:clickable="true"
+            app:srcCompat="@drawable/_065255"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+
+
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.cardview.widget.CardView>

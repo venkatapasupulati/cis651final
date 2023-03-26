@@ -59,7 +59,9 @@ public class WalkerPagerActivity extends AppCompatActivity {
         System.out.println("in MOVIE RECYCLER");
         md_list = new ArrayList<>();
 
+       String pawId = getIntent().getStringExtra("pawId");
 
+       getIntent().putExtra("pawId",pawId);
 
         userProfileRef.addChildEventListener(new ChildEventListener() {
             @Override
@@ -84,6 +86,7 @@ public class WalkerPagerActivity extends AppCompatActivity {
                if(snapshot.child("userType").getValue()!=null){
                    utype=snapshot.child("userType").getValue().toString();
                }
+               walkerProfile.setUserId(snapshot.child("userId").getValue().toString());
                if(utype.equalsIgnoreCase("DOGWALKER")){
                    md_list.add(walkerProfile);
                }
@@ -95,7 +98,7 @@ public class WalkerPagerActivity extends AppCompatActivity {
                 mViewPager = (ViewPager2) findViewById(R.id.pager);
                 mViewPager.setAdapter(walkerViewPagerAdapter);
 
-                //connect the tab layout with the view pager https://developer.android.com/guide/navigation/navigation-swipe-view-2
+
                 TabLayout tabLayout=(TabLayout)findViewById(R.id.tabs);
                 new TabLayoutMediator(tabLayout, mViewPager,
                         (tab, position) -> tab.setText(md_list.get(position).getName())

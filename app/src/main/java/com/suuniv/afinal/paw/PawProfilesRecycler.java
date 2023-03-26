@@ -205,7 +205,9 @@ public class PawProfilesRecycler extends RecyclerView.Adapter<PawProfilesRecycle
 
                                     return true;
                                 case R.id.update:
+
                                     Intent intent = (new Intent(view.getContext(), WalkerPagerActivity.class));
+                                    intent.putExtra("pawId",u.getPid());
                                     r.getContext().startActivity(intent);
                                     return true;
                                 default:

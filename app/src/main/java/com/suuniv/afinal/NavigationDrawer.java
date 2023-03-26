@@ -146,7 +146,7 @@ public class NavigationDrawer extends AppCompatActivity implements  NavigationVi
                 startActivity(intent);
                 break;
             case R.id.item2:
-                toast=Toast.makeText(this,"PawProfile Clicked",Toast.LENGTH_SHORT);
+                toast=Toast.makeText(this,"Requests Clicked",Toast.LENGTH_SHORT);
                 toast.show();
 
                 startActivity(new Intent(this, PawProfile.class));

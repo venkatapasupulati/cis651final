@@ -35,6 +35,7 @@ import com.suuniv.afinal.Destination;
 import com.suuniv.afinal.HomeFragment;
 import com.suuniv.afinal.PaymentMethod;
 import com.suuniv.afinal.R;
+import com.suuniv.afinal.requests.RequestListActivity;
 
 public class WalkerNavigation extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener {
 
@@ -158,12 +159,6 @@ public class WalkerNavigation extends AppCompatActivity implements  NavigationVi
                     i++;
                     }
 
-
-
-
-
-
-
                 }
             }
 
@@ -197,10 +192,10 @@ public class WalkerNavigation extends AppCompatActivity implements  NavigationVi
                 startActivity(intent);
                 break;
             case R.id.item2:
-                toast=Toast.makeText(this,"ViewPager Clicked",Toast.LENGTH_SHORT);
+                toast=Toast.makeText(this,"Myrequests",Toast.LENGTH_SHORT);
                 toast.show();
 
-                startActivity(new Intent(this, WalkerPagerActivity.class));
+                startActivity(new Intent(this, RequestListActivity.class));
                 break;
             case R.id.item3:
                 toast=Toast.makeText(this,"Item 3 Clicked",Toast.LENGTH_SHORT);

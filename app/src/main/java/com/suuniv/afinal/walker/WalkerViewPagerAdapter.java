@@ -20,9 +20,11 @@ public class WalkerViewPagerAdapter  extends FragmentStateAdapter {
 
     List<WalkerProfile> walkerProfiles;
 
+    String pawId;
     public WalkerViewPagerAdapter(@NonNull FragmentActivity fa, List<WalkerProfile> walkerProfiles) {
         super(fa);
         this.walkerProfiles = walkerProfiles;
+        pawId= fa.getIntent().getStringExtra("pawId");
 
     }
 
@@ -37,7 +39,9 @@ public class WalkerViewPagerAdapter  extends FragmentStateAdapter {
         args.putString("zip",walkerProfiles.get(i).getZip());
         args.putString("city",walkerProfiles.get(i).getCity());
         args.putString("image",walkerProfiles.get(i).getProfileImage());
-        //args.putString("price",walkerProfiles.get(i).getPrice());
+        args.putString("walkId",walkerProfiles.get(i).getUserId());
+        args.putString("pawId",pawId);
+        System.out.println("pawdid "+pawId);
         fragment.setArguments(args);
         return fragment;
     }
