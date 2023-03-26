@@ -72,6 +72,8 @@ public class WalkerPagerActivity extends AppCompatActivity {
                 walkerProfile.setState(snapshot.child("state").getValue().toString());
                 walkerProfile.setProfileImage(snapshot.child("profileImage").getValue().toString());
                 walkerProfile.setZip(snapshot.child("zip").getValue().toString());
+                walkerProfile.setCity(snapshot.child("city").getValue().toString());
+                //walkerProfile.setCity(snapshot.child("price").getValue().toString());
 
 
                 md_list.add(walkerProfile);
@@ -151,6 +153,9 @@ public class WalkerPagerActivity extends AppCompatActivity {
                 walkerProfile.setState(snapshot.child("state").getValue().toString());
                 walkerProfile.setProfileImage(snapshot.child("profileImage").getValue().toString());
                 walkerProfile.setZip(snapshot.child("zip").getValue().toString());
+                walkerProfile.setCity(snapshot.child("city").getValue().toString());
+                //walkerProfile.setCity(snapshot.child("price").getValue().toString());
+
 
                 md_list.add(walkerProfile);
 
