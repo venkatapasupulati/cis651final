@@ -125,7 +125,7 @@ public class WalkerNavigation extends AppCompatActivity implements  NavigationVi
         //hopefully send notification
         final FirebaseDatabase fireBaseData = FirebaseDatabase.getInstance();
         final DatabaseReference ref = fireBaseData.getReference();
-        ref.child("Request").addValueEventListener(new ValueEventListener(){
+        ref.child("WalkerRequests").addValueEventListener(new ValueEventListener(){
 
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -136,10 +136,11 @@ public class WalkerNavigation extends AppCompatActivity implements  NavigationVi
 
                 for (DataSnapshot imageSnapshot : snapshot.getChildren()) {
 
+                    int j=0;
 
                     //Put this in a wrapper so they only get their
 
-                    if(true){
+                    if(j<1){
                     Intent resultIntent = new Intent(getApplicationContext(), Destination.class);
                     // Create pending intent and wrap our intent
                     PendingIntent resultPendingIntent = PendingIntent.getActivity(getApplicationContext(), 1, resultIntent,
@@ -156,6 +157,7 @@ public class WalkerNavigation extends AppCompatActivity implements  NavigationVi
                     // create  Notification Manager
                     NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                     mNotificationManager.notify(i, mBuilder.build()); //notification ID, actual notification object.
+                    j++;
                     i++;
                     }
 

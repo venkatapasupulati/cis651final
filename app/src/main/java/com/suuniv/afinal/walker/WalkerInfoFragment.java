@@ -1,10 +1,12 @@
 package com.suuniv.afinal.walker;
 
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -104,6 +106,7 @@ public class WalkerInfoFragment extends Fragment {
                Toast toast=Toast.makeText(getContext(),"Request sent to Walker",Toast.LENGTH_SHORT);
                 toast.show();
 
+
                 Intent resultIntent = new Intent(getContext(), Destination.class);
                 // Create pending intent and wrap our intent
                 PendingIntent resultPendingIntent = PendingIntent.getActivity(getContext(), 1, resultIntent,
@@ -184,6 +187,22 @@ public class WalkerInfoFragment extends Fragment {
         intent.setData(geoLocation);
         if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
             startActivity(intent);
+        }
+    }
+
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "CIS651";
+            String description = "Week5 Channel Description";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getActivity().getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
         }
     }
 }

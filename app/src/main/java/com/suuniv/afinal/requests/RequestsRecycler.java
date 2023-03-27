@@ -43,6 +43,7 @@ public class RequestsRecycler extends RecyclerView.Adapter<RequestsRecycler.View
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
     private List<RequestInfo> requestInfoList;
+    private List<RequestInfo> md_filtered_List;
 
     public interface OnItemClickListener {
         void onListItemSelected(View sharedView, String imageResourceID, String title,
@@ -58,6 +59,7 @@ public class RequestsRecycler extends RecyclerView.Adapter<RequestsRecycler.View
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
         System.out.println("in requestInfoList RECYCLER");
+        this.md_filtered_List=requestInfoList;
 
         allPostsRef.addChildEventListener(new ChildEventListener() {
             @Override
@@ -70,12 +72,12 @@ public class RequestsRecycler extends RecyclerView.Adapter<RequestsRecycler.View
                     requestInfo.setRequestId(snapshot.child("requestId").getValue().toString());
                     requestInfo.setPawId(snapshot.child("pawId").getValue().toString());
                     requestInfo.setRequesterUid(snapshot.child("requesterUid").getValue().toString());
-                    requestInfoList.add(requestInfo);
+                    md_filtered_List.add(requestInfo);
                 }
 
                 RequestsRecycler.this.notifyDataSetChanged();
 
-                r.scrollToPosition(requestInfoList.size()-1);
+                r.scrollToPosition(md_filtered_List.size()-1);
             }
 
             @Override
@@ -86,9 +88,9 @@ public class RequestsRecycler extends RecyclerView.Adapter<RequestsRecycler.View
             @Override
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
                 System.out.println("on child removed "+snapshot.getKey());
-                for (int i = 0; i < requestInfoList.size(); i++) {
-                    if(requestInfoList.get(i).getRequestId().equals(snapshot.getKey())) {
-                        requestInfoList.remove(i);
+                for (int i = 0; i < md_filtered_List.size(); i++) {
+                    if(md_filtered_List.get(i).getRequestId().equals(snapshot.getKey())) {
+                        md_filtered_List.remove(i);
                         notifyItemRemoved(i);
                         break;
                     }
@@ -112,7 +114,40 @@ public class RequestsRecycler extends RecyclerView.Adapter<RequestsRecycler.View
 
     @Override
     public Filter getFilter() {
-        return null;
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+
+                String charString = charSequence.toString();
+                System.out.println("search string "+charString);
+                if(charString.isEmpty()){
+                    md_filtered_List = requestInfoList;
+                }else{
+                    System.out.println("search string in else "+charString);
+                    List<RequestInfo> filteredList = new ArrayList<>();
+                    for(RequestInfo requestInfo : requestInfoList){
+
+                        if(requestInfo.getRequestStatus().toLowerCase().contains(charString.toLowerCase())){
+
+                            filteredList.add(requestInfo);
+                        }
+                    }
+                    md_filtered_List = filteredList;
+                }
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = md_filtered_List;
+                System.out.println("fiterResults "+filterResults.values.toString());
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                System.out.println("publish results ");
+                md_filtered_List = (List<RequestInfo>) filterResults.values;
+//                System.out.println("md "+md_filtered.get(0).name);
+                notifyDataSetChanged();
+            }
+        };
     }
 
     @NonNull
@@ -126,8 +161,9 @@ public class RequestsRecycler extends RecyclerView.Adapter<RequestsRecycler.View
     @Override
     public void onBindViewHolder(@NonNull RequestsRecycler.ViewHolder holder, int position) {
 
-        RequestInfo requestInfo =requestInfoList.get(position);
+        RequestInfo requestInfo =md_filtered_List.get(position);
 
+        holder.status.setText(requestInfo.getRequestStatus());
         DatabaseReference userreq = database.getReference("UserProfile");
 
         DatabaseReference allPostsRef = FirebaseDatabase.getInstance().getReference("UserProfile/" + requestInfo.getRequesterUid());
@@ -236,7 +272,7 @@ public class RequestsRecycler extends RecyclerView.Adapter<RequestsRecycler.View
 
     @Override
     public int getItemCount() {
-        return requestInfoList.size();
+        return md_filtered_List.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
@@ -248,6 +284,8 @@ public class RequestsRecycler extends RecyclerView.Adapter<RequestsRecycler.View
         public ImageView imageView;
 
         public ImageView extras_v;
+
+        public TextView status;
 
         DatabaseReference uref;
         public TextView stars_v;
@@ -271,6 +309,8 @@ public class RequestsRecycler extends RecyclerView.Adapter<RequestsRecycler.View
             reject = v.findViewById(R.id.reject);
 
             done = v.findViewById(R.id.done);
+
+            status= v.findViewById(R.id.status1);
 
         }
     }

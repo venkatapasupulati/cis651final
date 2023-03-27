@@ -252,6 +252,8 @@ public class PawProfilesRecycler extends RecyclerView.Adapter<PawProfilesRecycle
 
             extras_v = v.findViewById(R.id.extras);
 
+//            imageView = v.findViewById(R.id.)
+
         }
     }
 }

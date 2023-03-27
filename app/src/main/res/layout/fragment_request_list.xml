@@ -22,7 +22,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/recyclerVieww"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:scrollbars="vertical"
         tools:itemCount="10"
         app:layout_constraintTop_toBottomOf="@id/requsl"
