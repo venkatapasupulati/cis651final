@@ -23,6 +23,7 @@
 
         <ImageView
             android:src="@drawable/dog_owner"
+            android:id="@+id/dog_owner"
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:scaleType="fitXY"

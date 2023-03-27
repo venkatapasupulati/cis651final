@@ -50,14 +50,14 @@ public class PawProfilesRecycler extends RecyclerView.Adapter<PawProfilesRecycle
     private List<PawModel> pawModelList;
 
     public interface OnItemClickListener {
-        void onListItemSelected(View sharedView, String imageResourceID, String title,
-                                String year,String rating, String description);
+        void onListItemSelected(View sharedView, PawModel pawModel);
     }
 
     private OnItemClickListener onItemClickListener;
     private RecyclerView r;
 
     public  PawProfilesRecycler(RecyclerView recyclerView, OnItemClickListener onItemClickListener){
+        this.onItemClickListener= onItemClickListener;
         pawModelList =new ArrayList<>();
         r=recyclerView;
         mAuth = FirebaseAuth.getInstance();
@@ -77,6 +77,7 @@ public class PawProfilesRecycler extends RecyclerView.Adapter<PawProfilesRecycle
                     pawModel.setAge(snapshot.child("age").getValue().toString());
                     pawModel.setQuirks(snapshot.child("quirks").getValue().toString());
                     pawModel.setPid(snapshot.child("pid").getValue().toString());
+                    pawModel.setUrl(snapshot.child("url").getValue().toString());
                     pawModelList.add(pawModel);
                 }
 
@@ -217,6 +218,18 @@ public class PawProfilesRecycler extends RecyclerView.Adapter<PawProfilesRecycle
                     });
                 }
             });
+
+            holder.imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    System.out.println("image clicked");
+                    if(onItemClickListener!=null) {
+                        System.out.println("in onitem");
+                        onItemClickListener.onListItemSelected(view, u);
+                    }
+
+                }
+            });
         }
 
 
@@ -252,7 +265,7 @@ public class PawProfilesRecycler extends RecyclerView.Adapter<PawProfilesRecycle
 
             extras_v = v.findViewById(R.id.extras);
 
-//            imageView = v.findViewById(R.id.)
+            imageView = v.findViewById(R.id.dog_owner);
 
         }
     }

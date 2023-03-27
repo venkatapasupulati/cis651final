@@ -3,6 +3,7 @@ package com.suuniv.afinal.paw;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,6 +28,7 @@ public class PawListFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private boolean twoPane;
 
     PawProfilesRecycler adapter;
     public PawListFragment() {
@@ -65,14 +67,41 @@ public class PawListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_paw_list, container, false);
+        View viewl = inflater.inflate(R.layout.activity_paw_profile, container, false);
 
+        twoPane=false;
+//        System.out.println(findViewById(R.id.detail_container));
+        if(viewl.findViewById(R.id.detail_container)!=null)
+        {
+            twoPane=true;
+        }
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
 
         adapter = new PawProfilesRecycler(recyclerView, new PawProfilesRecycler.OnItemClickListener() {
             @Override
-            public void onListItemSelected(View sharedView, String imageResourceID, String title, String year, String rating, String description) {
+            public void onListItemSelected(View sharedView, PawModel pawModel) {
 
+                Bundle args=new Bundle();
+                args.putString("name",pawModel.getPaw_name());
+                args.putString("age",pawModel.getAge());
+                args.putString("breed",pawModel.getBreed());
+                args.putString("quirks",pawModel.getQuirks());
+                args.putString("vaccinations",pawModel.getVaccinations());
+                args.putString("image",pawModel.getUrl());
+                Fragment detailFragment=new PawDetailsFragment();
+                detailFragment.setArguments(args);
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                if(twoPane){
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.detail_container, detailFragment)
+                            .addToBackStack(null).commit();
+                }else {
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.pawframe, detailFragment)
+                            .addToBackStack(null).commit();
+                }
             }
+
         });
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
