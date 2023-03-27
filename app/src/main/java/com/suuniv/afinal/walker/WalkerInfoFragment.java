@@ -1,6 +1,8 @@
 package com.suuniv.afinal.walker;
 
 import android.app.NotificationChannel;
+import static com.suuniv.afinal.HomeFragment.openSMS;
+
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -64,7 +66,7 @@ public class WalkerInfoFragment extends Fragment {
         ((TextView) rootView.findViewById(R.id.state)).setText(args.getString("state"));
         ((TextView) rootView.findViewById(R.id.zip)).setText(args.getString("zip"));
         ((TextView) rootView.findViewById(R.id.city)).setText(args.getString("city"));
-        //((TextView) rootView.findViewById(R.id.price)).setText(args.getString("price"));
+        ((TextView) rootView.findViewById(R.id.price)).setText("$40.00");
 
         String walkId = args.getString("walkId");
         String pawId = args.getString("pawId");
@@ -76,6 +78,16 @@ public class WalkerInfoFragment extends Fragment {
             public void onClick(View v) {
                 Uri ma = Uri.parse("geo:0,0?q=1600+Amphitheatre+Parkway%2C+CA");
                 showMap(ma);
+            }
+        });
+
+        Button sms = rootView.findViewById(R.id.sms);
+        sms.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                openSMS(getContext(),"Are you avaiable for a walk.","1234321234");
+
             }
         });
 

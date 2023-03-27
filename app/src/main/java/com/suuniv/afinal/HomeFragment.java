@@ -1,5 +1,7 @@
 package com.suuniv.afinal;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,6 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 import com.suuniv.afinal.paw.PawModel;
 import com.suuniv.afinal.paw.PawProfilesRecycler;
+import com.suuniv.afinal.requests.RequestInfo;
 
 import org.w3c.dom.Text;
 
@@ -60,15 +64,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup container, @NonNull Bundle savedInstaceState){
         View v = inflater.inflate(R.layout.account_summary,container,false);
 
-        Button sms = v.findViewById(R.id.sms);
-        sms.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                openSMS(getContext(),"Hey there","1234321234");
-
-            }
-        });
 
 
 
@@ -239,6 +235,45 @@ public class HomeFragment extends Fragment {
 
         });
 
+
+
+
+
+        //hopefully send notification
+        final FirebaseDatabase fireBaseData = FirebaseDatabase.getInstance();
+        final DatabaseReference ref = fireBaseData.getReference();
+        String user = currentUser.getUid();
+        ref.child("WalkerRequests").addValueEventListener(new ValueEventListener(){
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                //filter so we only see our user id being added
+
+                final Iterable<DataSnapshot> children = snapshot.getChildren();
+
+                int money = 0;
+                for (DataSnapshot imageSnapshot : snapshot.getChildren()) {
+                    RequestInfo requestInfo = imageSnapshot.getValue(RequestInfo.class);
+                    String userid = requestInfo.getDogwalkerUserId().toString();
+
+                    if(userid.equalsIgnoreCase(user) &&  requestInfo.getRequestStatus().equalsIgnoreCase("Completed")){
+                        money = money +40;
+                        System.out.println("money");
+                    }
+
+                }
+                TextView earning = v.findViewById(R.id.earnings);
+                earning.setText("$" + money);
+            }
+
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
 
 

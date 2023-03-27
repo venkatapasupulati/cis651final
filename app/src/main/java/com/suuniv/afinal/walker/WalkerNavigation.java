@@ -187,7 +187,7 @@ public class WalkerNavigation extends AppCompatActivity implements  NavigationVi
         switch (id)
         {
             case R.id.item1:
-                Toast toast=Toast.makeText(this,"Item 1 Clicked",Toast.LENGTH_SHORT);
+                Toast toast=Toast.makeText(this,"Updating Profile",Toast.LENGTH_SHORT);
                 toast.show();
                 Intent intent = new Intent(this,WalkerActivity.class);
                 intent.putExtra("userType",usertype);
@@ -200,7 +200,7 @@ public class WalkerNavigation extends AppCompatActivity implements  NavigationVi
                 startActivity(new Intent(this, RequestListActivity.class));
                 break;
             case R.id.item3:
-                toast=Toast.makeText(this,"Item 3 Clicked",Toast.LENGTH_SHORT);
+                toast=Toast.makeText(this,"Payment Method Setup",Toast.LENGTH_SHORT);
                 toast.show();
                 startActivity(new Intent(this, PaymentMethod.class));
                 break;

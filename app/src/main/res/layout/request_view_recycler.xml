@@ -30,6 +30,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:padding="15dp"
+            android:background="@drawable/dog_owner"
+            android:scaleType="fitXY"
             >
 
 
