@@ -67,14 +67,9 @@ public class PawListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_paw_list, container, false);
-        View viewl = inflater.inflate(R.layout.activity_paw_profile, container, false);
 
-        twoPane=false;
 //        System.out.println(findViewById(R.id.detail_container));
-        if(viewl.findViewById(R.id.detail_container)!=null)
-        {
-            twoPane=true;
-        }
+
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
 
         adapter = new PawProfilesRecycler(recyclerView, new PawProfilesRecycler.OnItemClickListener() {
@@ -91,15 +86,12 @@ public class PawListFragment extends Fragment {
                 Fragment detailFragment=new PawDetailsFragment();
                 detailFragment.setArguments(args);
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                if(twoPane){
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.detail_container, detailFragment)
-                            .addToBackStack(null).commit();
-                }else {
+
+
                     fragmentManager.beginTransaction()
                             .replace(R.id.pawframe, detailFragment)
                             .addToBackStack(null).commit();
-                }
+
             }
 
         });
