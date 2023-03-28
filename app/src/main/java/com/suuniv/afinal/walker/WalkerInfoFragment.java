@@ -99,6 +99,7 @@ public class WalkerInfoFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+
                 RequestInfo requestInfo = new RequestInfo();
 
                 String req = UUID.randomUUID().toString();
@@ -117,8 +118,9 @@ public class WalkerInfoFragment extends Fragment {
 
                Toast toast=Toast.makeText(getContext(),"Request sent to Walker",Toast.LENGTH_SHORT);
                 toast.show();
+                getActivity().finish();
 
-
+/*
                 Intent resultIntent = new Intent(getContext(), Destination.class);
                 // Create pending intent and wrap our intent
                 PendingIntent resultPendingIntent = PendingIntent.getActivity(getContext(), 1, resultIntent,
@@ -137,6 +139,8 @@ public class WalkerInfoFragment extends Fragment {
                 mNotificationManager.notify(0, mBuilder.build()); //notification ID, actual notification object.
 
 
+
+ */
                 //hopefully send notification
 //                final FirebaseDatabase fireBaseData = FirebaseDatabase.getInstance();
 //                final DatabaseReference ref = fireBaseData.getReference();
@@ -184,6 +188,7 @@ public class WalkerInfoFragment extends Fragment {
 //
 //                    }
 //                });
+
 
 
             }

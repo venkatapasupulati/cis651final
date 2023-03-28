@@ -133,15 +133,15 @@ public class WalkerNavigation extends AppCompatActivity implements  NavigationVi
                 //filter so we only see our user id being added
 
                 final Iterable<DataSnapshot> children = snapshot.getChildren();
+                int j=0;
 
                 for (DataSnapshot imageSnapshot : snapshot.getChildren()) {
 
-                    int j=0;
 
                     //Put this in a wrapper so they only get their
 
                     if(j<1){
-                    Intent resultIntent = new Intent(getApplicationContext(), Destination.class);
+                    Intent resultIntent = new Intent(getApplicationContext(), RequestListActivity.class);
                     // Create pending intent and wrap our intent
                     PendingIntent resultPendingIntent = PendingIntent.getActivity(getApplicationContext(), 1, resultIntent,
                             PendingIntent.FLAG_CANCEL_CURRENT); // flag: cancel any existing  pending intent
